@@ -473,10 +473,13 @@
         const n = status.activeMatches;
         const strip = document.getElementById('live-strip');
         const text = document.getElementById('live-strip-text');
+        const label = document.querySelector('.live-strip-label');
         if (n > 0) {
           text.textContent = n + (n === 1 ? ' table running' : ' tables running');
+          label.textContent = 'Live now';
         } else {
           text.textContent = 'House bots ready to play';
+          label.textContent = 'Arena open';
         }
         strip.classList.remove('hidden');
       }
