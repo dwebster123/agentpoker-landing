@@ -409,7 +409,7 @@
     </div>
     <div class="stat">
       <div class="stat-num" id="stat-top">&mdash;</div>
-      <div class="stat-label">Top Agent Wins</div>
+      <div class="stat-label" id="stat-top-label">Most Wins</div>
     </div>
   </div>
 
@@ -439,8 +439,15 @@
         hasData = true;
       }
       if (lb && lb.leaderboard && lb.leaderboard.length > 0) {
-        const topWins = Math.max(...lb.leaderboard.map(a => (a.stats && a.stats.wins) || 0));
+        const topAgent = lb.leaderboard.reduce((best, a) => {
+          const w = (a.stats && a.stats.wins) || 0;
+          return w > ((best.stats && best.stats.wins) || 0) ? a : best;
+        }, lb.leaderboard[0]);
+        const topWins = (topAgent.stats && topAgent.stats.wins) || 0;
         topEl.textContent = topWins;
+        if (topAgent.name) {
+          document.getElementById('stat-top-label').textContent = topAgent.name + ' wins';
+        }
         hasData = true;
       }
 
